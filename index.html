@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="initial-scale=1, minimum-scale=1, minimal-ui, maximum-scale=1" user-scalable="no">
+
+  <style>
+  textarea {
+      resize: none;
+      width:100%
+  }
+  textarea:focus {
+      outline: 0;
+      box-shadow: 0 0 0 3px rgba(21,156,228,.4)
+  }
+  textarea-parent {
+      position: relative;
+      display: flex;
+      width: 100%
+  }
+  textarea-parent>span {
+      position: absolute;
+      right: 0px;
+      bottom: 0px;
+      font-size: 10px;
+      text-align: right;
+      cursor: default;
+      font-weight: 300
+  }
+  </style>
+
+
+
+</head>
+
+  <body>
+    <textarea-parent>
+      <textarea rows="1" placeholder="Test"></textarea>
+      <span></span>
+    </textarea-parent>
+  </body>
+<script>
+// textarea autosize
+(function textareaAutosize() {
+  let lim_height = 800;
+  let lim_symbol = 500;
+  // select all textarea
+  document.querySelectorAll('textarea').forEach(txtar => {
+    // capture textarea keydown
+    txtar.oninput = (e) => {
+      txtar.style.height = "";
+      //set textarea height
+      txtar.style.height = Math.min(txtar.scrollHeight, lim_height) + "px";
+      textEntered = txtar.value;
+      //set span with counter
+      txtar.nextElementSibling.textContent = (lim_symbol - (textEntered.length));
+      //set style of span
+      txtar.nextElementSibling.style.cssText =
+        (textEntered.length < 50) ? 'display:none' :
+        (textEntered.length < 420) ? 'display:flex; font-weight:300' :
+        "display:flex; color: red; font-weight:600";
+    }
+  })
+})();
+</script>
+</html>
